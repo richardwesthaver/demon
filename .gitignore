@@ -1,0 +1,13 @@
+result*
+pkg*
+target*
+node_modules*
+dist*
+cfg*
+lab*
+hack*
+docs/scratch/
+**/*.rs.bk
+**/Cargo.lock
+**/package-lock.json
+.hg*
