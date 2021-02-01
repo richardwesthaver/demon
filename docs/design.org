@@ -1,0 +1,82 @@
+#+TITLE: Design
+#+DESCRIPTION: Project Design Notes
+#+OPTIONS: toc:nil num:3 H:4 ^:nil pri:t
+#+DATE: [2021-01-11 Mon]
+#+STATUS: IN PROGRESS
+#+name: commit_hash
+#+BEGIN_SRC emacs-lisp :exports none :tangle no
+  (shell-command-to-string "hg id -i")
+#+END_SRC
+
+- EXPORTED: {{{time(%Y-%m-%dT%T%z)}}}
+- LAST MOD: {{{modification-time(%Y-%m-%dT%T%z)}}}
+- COMMIT ID: call_commit_hash()
+
+* Design
+Our framework is primarily built upon the [[https://libp2p.io/][libp2p]] network stack, and
+thus provides an opinionated implementation of many of its core
+modules. You can see a full list of the types of modules, and their
+current status [[https://libp2p.io/implementations/][here]].
+
+The libp2p docs are quite in-depth, but quite verbose. Here are some
+of the core concepts which we'll refer to frequently:
+- *Peer* - An individual member of a libp2p network
+- *PeerID* - Identifies a unique Peer (by the multihash of its Public Key)
+- *Dial* - Opposite to *listen*, refers to an attempt to contact a peer
+- *Connection* - A reliable, bidirectional communication channel between two peers
+- *Transport* - The underlying interface used to build connections (TCP/UDP/Unix sockets)
+- *Multiaddress* - A modular addressing format that supports combining network layers (/ip4/127.0.0.1/udp/1234)
+- *STUN* - enabled by [[https://lwn.net/Articles/542629/][SO_REUSEPORT]] socket option, also known as hole-punching
+- *TURN* - defined in [[https://tools.ietf.org/html/rfc5766][RFC 5766]], implemented as 'Circuit Relays' in libp2p
+- *Switch* - sometimes called the "swarm", provides a dialing and listening interface
+
+#+begin_src dot exports: result :file media/architecture.png
+digraph {
+  compound=true;
+  node [ fontname="Liberation Mono" ];
+  splines=true;
+  subgraph cluster_zone {
+      label="DMZ";
+      REGISTRY;
+      STATE;
+      TX;
+      subgraph cluster_listener {
+        label="RX";
+        DECODE -> COMMAND;
+      }
+  }
+
+  subgraph cluster_z1 {
+    label="ZONE";
+    TRANSPORT;
+    STATE;
+    subgraph cluster_d1 {
+      label="D1";
+      color="red";
+      rx1 -> rt1 -> tx1;
+    }
+  
+    subgraph cluster_d2 {
+      label="D2";
+      rx2 ->rt2 ->tx2;
+    }
+  }
+
+  subgraph cluster_d3 {
+      label="D3";
+      rx3 -> rt3 -> tx3;
+  }
+  CLIENT -> DECODE;
+  TX -> TRANSPORT;
+  TX -> rx3;
+  TRANSPORT -> rx1;
+  TRANSPORT -> rx2;
+  tx1 -> SINK;
+  tx2 -> SINK;
+  tx3 -> SINK;
+}
+#+end_src
+
+
+#+RESULTS:
+[[file:media/architecture.png]]

@@ -1,0 +1,18 @@
+[package]
+name = "dm-bin"
+version = "0.0.1"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+# [[bin]] name = path = 
+[[bin]]
+name = "node"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { version = "1.0.0", features = ["full", "tracing"] }
+futures = "0.3.8"
+# utilities for transcoding frames
+tokio-util = "0.6.0"
+tokio-stream = "0.1"
+bytes = "1.0.0"

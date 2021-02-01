@@ -1,0 +1,23 @@
+[package]
+name = "demon_tools"
+version = "0.0.1"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+dunce = "1.0.1"
+io-uring = "0.5.0-alpha"
+async-trait = "0.1.21"
+trust-dns-resolver = "0.20.0"
+tokio = { version = "1.0", features = ["rt", "sync"] }
+failure = "0.1.6"
+ipnetwork = "0.17.0"
+pnet = "0.27.2"
+procfs = "0.9.1"
+crossterm = "0.18.0"
+quickcheck = "0.9.2" # 1.0 release coming soon..
+quickcheck_macros = "0.9.1"
+rand = { version = "0.7.3", features = ["small_rng"] }
+ascii = "1.0"
+hostname = { version = "0.3", features = ["set"] }

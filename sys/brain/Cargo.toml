@@ -1,0 +1,13 @@
+[package]
+name = "demon_brain"
+version = "0.0.1"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+smartcore = { git = "https://github.com/smartcorelib/smartcore", default-features = false, features = ["nalgebra-bindings", "datasets"] }
+nalgebra = "0.23.2"
+deepspeech = "0.9.0"
+
+[dev-dependencies]
+deepspeech = { version = "0.9.0", features = ["dynamic"] } # for testing master branch: https://github.com/mozilla/DeepSpeech/tree/master

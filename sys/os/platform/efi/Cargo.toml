@@ -1,0 +1,16 @@
+[package]
+name = "efi"
+version = "0.1.0"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+log = { version = "0.4", default-features = false }
+spin = "0.7.0"
+
+# When building using Cargo's `build-std` feature, the `mem` feature of `compiler-builtins`
+# does not automatically get enabled. Therefore, we have to manually add support for
+# the memory functions.
+rlibc = "1.0.0"
+
+uefi = { version = "0.7.0", default-features = false, features = ["logger"] }

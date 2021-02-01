@@ -1,0 +1,38 @@
+[workspace]
+members = [
+"sys/core",
+
+"sys/crypto",
+"sys/config",
+"sys/db",
+"sys/brain",
+"sys/audio",
+"sys/macros",
+
+"utils/aws",
+"utils/org",
+"utils/prometheus",
+"utils/build-utils",
+"utils/tools",
+
+"bin/app/nan",
+"bin/app/bw",
+# "bin/stripe", # will need a build script for this to work
+]
+
+# [dev-dependencies]
+# criterion = "0.3"
+# criterion-macro = "0.3"
+# ron = "0.6.4"
+# rand = "0.8"
+# crc = "1.8.1"
+
+
+# [[bench]] #TODO
+# name = "bench"
+# path = "tests/benches/bench.rs"
+
+# [profile.release]
+# codegen-units = 1
+# # debug = true # symbols are nice and they don't increase the size on Flash
+# lto = true

@@ -1,0 +1,12 @@
+[package]
+name = "aws"
+version = "0.1.0"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tokio = { version = "1.0", features = ["macros"] }
+lambda_http = { git = "https://github.com/awslabs/aws-lambda-rust-runtime/", branch = "master"}
+serde_json = "1.0"

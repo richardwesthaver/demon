@@ -1,0 +1,13 @@
+[package]
+name = "demon_audio"
+version = "0.0.1"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+rodio = "0.13.0"
+cpal = "0.13.1"
+hound = "3.4.0"
+bitvec = "0.18.1"
+dasp = { version = "0.11.0", features = ["signal"] }
+demon_core = { path = "../core" }

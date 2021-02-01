@@ -1,0 +1,16 @@
+[package]
+name = "prometheus"
+version = "0.1.0"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+log = "0.4.8"
+prometheus = { version = "0.10.0", default-features = false }
+futures-util = { version = "0.3.1", default-features = false, features = ["io"] }
+derive_more = "0.99"
+async-std = { version = "1.6.5", features = ["unstable"] }
+hyper = { version = "0.13.9", default-features = false, features = ["stream"] }
+tokio = "0.2"

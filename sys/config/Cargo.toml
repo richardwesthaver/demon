@@ -1,0 +1,15 @@
+[package]
+name = "demon_config"
+version = "0.0.1"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive", "rc"] }
+serde_json = "1.0"
+log = "0.4.11"
+slog = { version = "2.7.0", features = ["max_level_debug"] }
+anyhow = "1.0"
+
+[dev-dependencies]
+serde_derive = "1"

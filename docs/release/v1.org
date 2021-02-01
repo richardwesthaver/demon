@@ -1,0 +1,10 @@
+#+TITLE: Demon Version 1.0
+#+TAGS: v1.0
+* TODO Release Notes                                          :notes:
+DEADLINE: TBD
+:LOGBOOK:
+- state "TODO"       from              [2020-12-19 Sat 22:56]
+:END:
+
+* Features
+

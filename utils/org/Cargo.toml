@@ -1,0 +1,10 @@
+[package]
+name = "demon_org"
+version = "0.0.1"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+orgize = { version = "0.8.4" }
+thiserror = "1.0.22"
+slugify = "0.1.0"

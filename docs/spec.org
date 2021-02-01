@@ -1,0 +1,16 @@
+#+TITLE: Demon Project Specification
+#+DESCRIPTION: Laws of the Land
+
+* Minimum Supported Rust Version
+Rust *1.48* or higher.
+
+MSRV can be changed in the future, with minor version bumps.
+
+* SemVer Policy
+- All features of this library are covered by SemVer
+- MSRV is considered exempt from SemVer as noted above
+
+* License
+
+All properties created by the authors in this library are free to use without any guarantees of safety or viability under [[http://www.wtfpl.net/][WTFPL]], unless otherwise explicitly stated in the section that follows.
+** Exceptions

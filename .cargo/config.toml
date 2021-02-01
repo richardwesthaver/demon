@@ -1,0 +1,7 @@
+[build]
+target = "x86_64-unknown-linux-gnu"
+
+[unstable]
+mtime-on-use = true
+multitarget = true
+timings = ["yes"]
