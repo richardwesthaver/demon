@@ -11,3 +11,4 @@ docs/scratch/
 **/Cargo.lock
 **/package-lock.json
 .hg*
+.env*

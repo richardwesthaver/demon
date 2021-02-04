@@ -1,0 +1,17 @@
+[package]
+name = "demon_net"
+version = "0.1.0"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+tokio = { version = "1", features = ["full", "tracing"] }
+tokio-util = { version = "0.6.3", features = ["full"] }
+futures = { version = "0.3.0", features = ["thread-pool"]}
+async-stream = "0.3"
+thiserror = "1.0.21"
+bytes = "1"
+tracing = "0.1.10"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+httparse = "1.0"

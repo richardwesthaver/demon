@@ -1,6 +1,6 @@
 [package]
 name = "stripe"
-version = "0.1.0"
+version = "0.1."
 edition = "2018"
 
 [dependencies]
@@ -8,3 +8,4 @@ tokio = { version = "1.0", features = ["macros"] }
 lambda_http = { git = "https://github.com/awslabs/aws-lambda-rust-runtime", branch = "master"}
 lambda = { git = "https://github.com/awslabs/aws-lambda-rust-runtime", branch = "master"}
 serde_json = "1.0"
+aws = { path = "../../utils/aws" }

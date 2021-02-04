@@ -1,16 +1,25 @@
 #+TITLE: Design
-#+DESCRIPTION: Project Design Notes
-#+OPTIONS: toc:nil num:3 H:4 ^:nil pri:t
+#+AUTHOR: ellis
+#+EMAIL: richard.westhaver@gmail.com
+#+description: Project Design Notes
+#+OPTIONS: toc:nil num:nil
 #+DATE: [2021-01-11 Mon]
-#+STATUS: IN PROGRESS
+#+keywords: emacs
+#+html_link_home: https://github.com/richardwesthaver/demon
+#+html_link_up: https://rwest.io/projects
 #+name: commit_hash
 #+BEGIN_SRC emacs-lisp :exports none :tangle no
-  (shell-command-to-string "hg id -i")
+  (shell-command-to-string "git rev-parse HEAD")
 #+END_SRC
 
+- VERSION: 0.1
 - EXPORTED: {{{time(%Y-%m-%dT%T%z)}}}
 - LAST MOD: {{{modification-time(%Y-%m-%dT%T%z)}}}
 - COMMIT ID: call_commit_hash()
+- AUTHOR: {{{author}}}
+- EMAIL: {{{email}}}
+
+#+INCLUDE: /srv/src/org/projects.org::*demon
 
 * Design
 Our framework is primarily built upon the [[https://libp2p.io/][libp2p]] network stack, and
@@ -30,7 +39,7 @@ of the core concepts which we'll refer to frequently:
 - *TURN* - defined in [[https://tools.ietf.org/html/rfc5766][RFC 5766]], implemented as 'Circuit Relays' in libp2p
 - *Switch* - sometimes called the "swarm", provides a dialing and listening interface
 
-#+begin_src dot exports: result :file media/architecture.png
+#+begin_src dot exports: result :file /dfs/media/demon/architecture.png
 digraph {
   compound=true;
   node [ fontname="Liberation Mono" ];
@@ -79,4 +88,4 @@ digraph {
 
 
 #+RESULTS:
-[[file:media/architecture.png]]
+[[/dfs/media/demon/architecture.png]]
