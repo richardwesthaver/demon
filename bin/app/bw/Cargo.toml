@@ -8,9 +8,8 @@ edition = "2018"
 [dependencies]
 demon_core = { path = "../../../sys/core" }
 demon_tools = { path = "../../../utils/tools" }
-clap = { version = "3.0.0-beta.2" }
+tui = { version = "0.14.0", features = ["crossterm"] }
 sysinfo = "0.16.1"
-tui = { version = "0.13.0", features = ["crossterm"] }
 crossterm = "0.18.0"
 chrono = "0.4.19"
 unicode-width = "0.1.8"
