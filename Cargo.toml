@@ -9,8 +9,6 @@ members = [
 "sys/cli",
 "sys/brain",
 "sys/audio",
-"sys/macros",
-
 
 "utils/aws",
 "utils/org",
