@@ -5,7 +5,6 @@ authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-smartcore = { git = "https://github.com/smartcorelib/smartcore", default-features = false, features = ["nalgebra-bindings", "datasets"] }
 nalgebra = "0.23.2"
 deepspeech = "0.9.0"
 
