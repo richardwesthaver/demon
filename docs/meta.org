@@ -1,8 +1,9 @@
-#+TITLE: Design
+#+TITLE: demon
 #+AUTHOR: ellis
 #+EMAIL: richard.westhaver@gmail.com
 #+description: Project Design Notes
 #+OPTIONS: toc:nil num:nil
+#+OPTIONS: prop:t timestamp:t p:t d:t c:t <:t
 #+DATE: [2021-01-11 Mon]
 #+keywords: emacs
 #+html_link_home: https://github.com/richardwesthaver/demon
@@ -19,9 +20,24 @@
 - AUTHOR: {{{author}}}
 - EMAIL: {{{email}}}
 
-#+INCLUDE: /srv/src/org/projects.org::*demon
+This project is made public for educational purposes only, and has no
+official Public API. All code is unlicensed but I encourage you to
+check out the dependency crates for building a project of your own.
 
-* Design
+* Getting Started
+** Using the Makefile
+	 - install dependencies: GNUMake
+	 - ~make help~
+** Run a binary
+	 - ~cargo run --bin $bin_name~
+		 - nan
+		 - bw
+		 - curse
+* Core
+	:PROPERTIES:
+	:LOCATION: sys/core
+	:END:
+** Design
 Our framework is primarily built upon the [[https://libp2p.io/][libp2p]] network stack, and
 thus provides an opinionated implementation of many of its core
 modules. You can see a full list of the types of modules, and their
@@ -39,7 +55,7 @@ of the core concepts which we'll refer to frequently:
 - *TURN* - defined in [[https://tools.ietf.org/html/rfc5766][RFC 5766]], implemented as 'Circuit Relays' in libp2p
 - *Switch* - sometimes called the "swarm", provides a dialing and listening interface
 
-#+begin_src dot exports: result :file /dfs/media/demon/architecture.png
+#+begin_src dot :exports results :file /dfs/media/demon/architecture.png
 digraph {
   compound=true;
   node [ fontname="Liberation Mono" ];
@@ -88,4 +104,7 @@ digraph {
 
 
 #+RESULTS:
-[[/dfs/media/demon/architecture.png]]
+[[https://demon.rwest.io/media/demon/architecture.png]]
+
+* roadmap
+#+INCLUDE: /srv/src/org/projects.org::*demon :only-contents t :minlevel 1

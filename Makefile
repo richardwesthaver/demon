@@ -12,20 +12,21 @@ ETC=/etc/dm.json
 
 _: build
 
+help:
+	@echo TODO: helpfile
 build:
 	cargo build --all
 
 fmt:
 	cargo fmt --all
 
-push:
 	hg add .	;\
 	hg commit -m "$(shell read -p 'Commit message: ' msg; echo $$msg)"
 
 mirror:
 	git add . ;\
-	git commit -m "from hg.rwest.io/demon: $(shell hg id -i)" ;\
-	git push -f --set-upstream origin master	;\
+	git commit -m "$(shell read -p 'Commit message: ' msg; echo $$msg)"  ;\
+	git push -f --set-upstream origin master
 
 serve: $(DOCS)
 	darkhttpd $(DOCS) --addr 0.0.0.0 --index index.html --no-keepalive --no-server-id
