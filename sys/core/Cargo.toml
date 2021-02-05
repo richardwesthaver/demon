@@ -33,4 +33,4 @@ hex-literal = "0.3.0"
 tracing-subscriber = { version = "0.2.15", default-features = false, features = ["env-filter", "fmt", "chrono"]}
 lazy_static = "1"
 quickcheck = "0.9.2" # 1.0 release coming soon..
-quickcheck_macros = "0.9.1"
+quickcheck_macros = "1.0.0"
