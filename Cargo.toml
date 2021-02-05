@@ -2,7 +2,6 @@
 members = [
 "sys/core",
 
-"sys/crypto",
 "sys/net",
 "sys/config",
 "sys/db",
