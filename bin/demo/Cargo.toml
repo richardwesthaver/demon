@@ -1,0 +1,21 @@
+[package]
+name = "demo"
+version = "0.1.0"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+demon_core = { path = "../../sys/core" } # Demon internals
+demon_config = { path = "../../sys/config" } # Demon configuration
+demon_cli = { path = "../../sys/cli" } # CLI components
+
+anyhow = "1.0.38"
+
+[[example]]
+name = "controller"
+
+[[example]]
+name = "node"
+
+[[example]]
+name = "sink"
