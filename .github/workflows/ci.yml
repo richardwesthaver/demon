@@ -10,11 +10,10 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-	build:
-		matrix:
-			toolchain: [stable, nightly]
-			os: [windows-latest, ubuntu-latest, macos-latest]
-			exclude:
+  build:
+    matrix:
+      toolchain: [stable, nightly]
+      os: [windows-latest, ubuntu-latest, macos-latest]
 		runs-on: ${{ matrix.os }}
 		steps:
 		  - uses: actions/checkout@v2
@@ -29,9 +28,8 @@ jobs:
 		  - name: Clippy
 			  run: cargo clippy --all-targets --all-features -- -A clippy::type_complexity -A clippy::manual-strip
 				if: runner.os == 'linux' && matrix.toolchain == 'stable'
-
-			- name: Build and run tests
-			  run: cargo test --workspace
+      - name: Build and run tests
+        run: cargo test --workspace
 				env:
-				  CARGO_INCREMENTAL: 0
-					RUSTFLAGS: "-C debuginfo=0"
+          CARGO_INCREMENTAL: 0
+          RUSTFLAGS: "-C debuginfo=0"
