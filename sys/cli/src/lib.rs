@@ -13,14 +13,13 @@ pub mod app;
 pub mod ui;
 pub use cursive;
 
-use thiserror::Error;
 use clap::Clap;
+use thiserror::Error;
 
 #[derive(Clap)]
 struct Opts {
-		input: String,
+  input: String,
 }
 
 #[derive(Debug, Error)]
-pub(crate) enum CliError {
-}
+pub(crate) enum CliError {}
