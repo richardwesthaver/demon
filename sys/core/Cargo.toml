@@ -12,7 +12,6 @@ default = []
 hf1 = ["default", "panic-halt", "riscv", "riscv-rt", "hifive1", "embedded-hal"]
 
 [dependencies]
-macros = { path = "../macros" }
 petgraph = "0.5.1"
 bytes = "1.0.0"
 thiserror = "1.0.23"

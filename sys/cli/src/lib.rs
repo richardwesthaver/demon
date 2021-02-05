@@ -13,13 +13,7 @@ pub mod app;
 pub mod ui;
 pub use cursive;
 
-use clap::Clap;
 use thiserror::Error;
-
-#[derive(Clap)]
-struct Opts {
-  input: String,
-}
 
 #[derive(Debug, Error)]
 pub(crate) enum CliError {}
