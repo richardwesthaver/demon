@@ -1,7 +1,6 @@
 pub mod clock;
 pub mod keylog;
 pub mod tree;
-pub mod calendar;
 use cursive::view::Position;
 use cursive::views::LayerPosition;
 use cursive::Cursive;
