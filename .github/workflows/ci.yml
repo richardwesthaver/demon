@@ -15,22 +15,22 @@ jobs:
       matrix:
         toolchain: [stable, nightly]
         os: [windows-latest, ubuntu-latest, macos-latest]
-      runs-on: ${{ matrix.os }}
-      steps:
-        - uses: actions/checkout@v2
-        - uses: actions-rs/toolchain@v1
-          with:
-            toolchain: ${{ matrix.toolchain }}
-            components: rustfmt, clippy
-            override: true
-        - name: Check formatting
-          run: cargo fmt --all -- --check
-          if: runner.os == 'linux' && matrix.toolchain == 'stable'
-        - name: Clippy
-          run: cargo clippy --all-targets --all-features -- -A clippy::type_complexity -A clippy::manual-strip
-          if: runner.os == 'linux' && matrix.toolchain == 'stable'
-        - name: Build and run tests
-          run: cargo test --workspace
-          env:
-            CARGO_INCREMENTAL: 0
-            RUSTFLAGS: "-C debuginfo=0"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ matrix.toolchain }}
+          components: rustfmt, clippy
+          override: true
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+        if: runner.os == 'linux' && matrix.toolchain == 'stable'
+      - name: Clippy
+        run: cargo clippy --all-targets --all-features -- -A clippy::type_complexity -A clippy::manual-strip
+        if: runner.os == 'linux' && matrix.toolchain == 'stable'
+      - name: Build and run tests
+        run: cargo test --workspace
+        env:
+          CARGO_INCREMENTAL: 0
+          RUSTFLAGS: "-C debuginfo=0"
