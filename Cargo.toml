@@ -6,9 +6,12 @@ members = [
 "sys/net",
 "sys/config",
 "sys/db",
+"sys/cmd",
+"sys/cli",
 "sys/brain",
 "sys/audio",
 "sys/macros",
+
 
 "utils/aws",
 "utils/org",
@@ -18,6 +21,7 @@ members = [
 
 "bin/app/nan",
 "bin/app/bw",
+"bin/app/curse",
 # "bin/stripe", # will need a build script for this to work
 ]
 

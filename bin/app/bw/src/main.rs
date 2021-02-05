@@ -6,7 +6,6 @@ extern crate demon_core as core;
 extern crate demon_tools as tools;
 
 mod app;
-mod cons;
 #[cfg(test)]
 mod tests;
 

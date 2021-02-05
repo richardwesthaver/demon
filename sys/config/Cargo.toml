@@ -9,7 +9,8 @@ serde = { version = "1.0", features = ["derive", "rc"] }
 serde_json = "1.0"
 log = "0.4.11"
 slog = { version = "2.7.0", features = ["max_level_debug"] }
-anyhow = "1.0"
+anyhow = "1.0" # TODO: we should only use anyhow as a dev_dependency, or in bin/ modules.
 thiserror = "1.0.21"
+
 [dev-dependencies]
 serde_derive = "1"

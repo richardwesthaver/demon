@@ -8,8 +8,6 @@ pub(crate) struct Packet {
 }
 
 pub struct Header {
-		dst: ConnectionId,
-		src: ConnectionId,
 		len: u64,
 }
 
@@ -17,10 +15,4 @@ pub struct Header {
 pub(crate) enum PacketDecodeError {
 		#[error("invalid header: {0}")]
     InvalidHeader(&'static str),
-}
-
-impl From<codec::UnexpectedEnd> for PacketDecodeError {
-		fn from(_: codec::UnexpectedEnd) -> Self {
-				PacketDecodeError::InvalidHeader("unexpected end of packet")
-		}
 }

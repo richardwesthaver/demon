@@ -21,7 +21,7 @@ use std::sync::Arc;
 use std::collections::HashMap;
 use std::error::Error;
 
-mod codec;
+mod packet;
 
 type Tx = mpsc::UnboundedSender<String>;
 
@@ -29,23 +29,23 @@ struct Shared {
     peers: HashMap<SocketAddr, Tx>,
 }
 
-pub struct Peer {
+struct Peer {
 		server_config: Option<Server>,		
 		client_config: Client,
 		db: Option<Database>,
 }
 
 impl Peer {
-		pub fn new(client_config: &Client, server_config: &Server) -> Self {
+		fn new() -> Self {
 				Self {
 						server_config: None,
-						client_config: Client::default(),
+						client_config: Client::new(),
 						db: None,
 				}
 		}
 }
 
-pub async fn connect(
+async fn connect(
     addr: &SocketAddr,
     stdin: impl Stream<Item = Result<Bytes, io::Error>> + Unpin,
     stdout: impl Sink<Bytes, Error = io::Error> + Unpin,
@@ -123,7 +123,17 @@ impl Server {
     }
 }
 
-pub struct Client;
+struct Client {
+		addr: SocketAddr,
+}
+
+impl Client {
+		fn new() -> Self {
+				Self {
+						addr: "0.0.0.0:0".parse::<SocketAddr>().unwrap(),
+				}
+		}
+}
 
 #[derive(Deserialize, Debug)]
 struct User {

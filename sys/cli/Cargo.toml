@@ -1,0 +1,21 @@
+[package]
+name = "demon_cli"
+version = "0.1.0"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+crossterm = { version = "0.19.0" }
+cursive = { version = "0.16", default_features = false, features = [ "crossterm-backend", "toml" ] }
+clipboard = "0.5"
+cursive_table_view = "0.12"
+cursive_tree_view = "0.7"
+cursive_calendar_view = "0.7"
+fui = "1.0"
+thiserror = "1.0.21"
+clap = { version = "3.0.0-beta.2", features = [ "suggestions", "derive" ] }
+serde = { version = "1.0", features = ["derive"] }
+man = "0.3"
+
+[dev-dependencies]
+rand = "0.8"
