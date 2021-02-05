@@ -23,6 +23,9 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
           components: rustfmt, clippy
           override: true
+      - name: Install alsa and udev
+        run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
+        if: runner.os == 'linux'					
       - name: Check formatting
         run: cargo fmt --all -- --check
         if: runner.os == 'linux' && matrix.toolchain == 'stable'
