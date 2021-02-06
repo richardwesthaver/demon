@@ -15,7 +15,7 @@ anyhow = "1.0.38"
 name = "controller"
 
 [[example]]
-name = "node"
+name = "peer"
 
 [[example]]
 name = "sink"
