@@ -1,6 +1,5 @@
 use std::net::SocketAddr;
 
-use futures_util::{future::Future, FutureExt};
 pub use prometheus::{
   self,
   core::{
@@ -12,10 +11,8 @@ pub use prometheus::{
 };
 use prometheus::{core::Collector, Encoder, TextEncoder};
 
-mod networking;
 mod sourced;
 
-pub use known_os::init_prometheus;
 pub use sourced::{MetricSource, SourcedCounter, SourcedGauge, SourcedMetric};
 
 pub fn register<T: Clone + Collector + 'static>(
@@ -27,11 +24,7 @@ pub fn register<T: Clone + Collector + 'static>(
 }
 
 mod known_os {
-  use hyper::{
-    http::StatusCode,
-    service::{make_service_fn, service_fn},
-    Body, Request, Response, Server,
-  };
+  use hyper::{http::StatusCode, Body, Request, Response};
 
   use super::*;
 
@@ -79,51 +72,5 @@ mod known_os {
         .body(Body::from("Not found."))
         .map_err(Error::Http)
     }
-  }
-
-  #[derive(Clone)]
-  pub struct Executor;
-
-  impl<T> hyper::rt::Executor<T> for Executor
-  where
-    T: Future + Send + 'static,
-    T::Output: Send + 'static,
-  {
-    fn execute(&self, future: T) {
-      async_std::task::spawn(future);
-    }
-  }
-
-  /// Initializes the metrics context, and starts an HTTP server
-  /// to serve metrics.
-  pub async fn init_prometheus(
-    prometheus_addr: SocketAddr,
-    registry: Registry,
-  ) -> Result<(), Error> {
-    use networking::Incoming;
-    let listener = async_std::net::TcpListener::bind(&prometheus_addr)
-      .await
-      .map_err(|_| Error::PortInUse(prometheus_addr))?;
-
-    log::info!("〽️ Prometheus server started at {}", prometheus_addr);
-
-    let service = make_service_fn(move |_| {
-      let registry = registry.clone();
-
-      async move {
-        Ok::<_, hyper::Error>(service_fn(move |req: Request<Body>| {
-          request_metrics(req, registry.clone())
-        }))
-      }
-    });
-
-    let server = Server::builder(Incoming(listener.incoming()))
-      .executor(Executor)
-      .serve(service)
-      .boxed();
-
-    let result = server.await.map_err(Into::into);
-
-    result
   }
 }

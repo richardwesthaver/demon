@@ -1,7 +1,12 @@
 [workspace]
 members = [
-"sys/core",
+"bin/demo",
 
+"bin/app/nan",
+"bin/app/bw",
+"bin/app/curse",
+
+"sys/core",
 "sys/net",
 "sys/config",
 "sys/db",
@@ -16,9 +21,6 @@ members = [
 "utils/build-utils",
 "utils/tools",
 
-"bin/app/nan",
-"bin/app/bw",
-"bin/app/curse",
 # "bin/stripe", # will need a build script for this to work
 ]
 

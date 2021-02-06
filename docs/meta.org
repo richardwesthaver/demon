@@ -8,6 +8,7 @@
 #+keywords: emacs
 #+html_link_home: https://github.com/richardwesthaver/demon
 #+html_link_up: https://rwest.io/projects
+
 #+name: commit_hash
 #+BEGIN_SRC emacs-lisp :exports none :tangle no
   (shell-command-to-string "git rev-parse HEAD")
@@ -20,40 +21,57 @@
 - AUTHOR: {{{author}}}
 - EMAIL: {{{email}}}
 
+
+
 This project is made public for educational purposes only, and has no
-official Public API. All code is unlicensed but I encourage you to
-check out the dependency crates for building a project of your own.
+official Public API. All code is free and open-source, but I encourage
+you to check out the dependency crates for starting a similar project.
 
 * Getting Started
 ** Using the Makefile
-	 - install dependencies: GNUMake
 	 - ~make help~
 ** Run a binary
 	 - ~cargo run --bin $bin_name~
+		 - demo
 		 - nan
 		 - bw
 		 - curse
+** Run an example
+	 All examples are located in =bin/demo/examples=. Open a minimum of
+	 3 terminals and run 'controller' 'peer' and 'sink' individually for
+	 a fully functional local Demon.
+	 
+	 - ~cargo run --example $example_name~
+		 - controller
+		 - peer
+		 - sink
+** Testing the OS
+** TODO Testing RF Signals
+	 - [[https://wiki.gnuradio.org/index.php/InstallingGR#From_Binaries][install gnuradio]] on receiver machine
+	 - [[https://greatscottgadgets.com/hackrf/one/][HackRF One]] in transmit mode
+* TODO Abstract
 * Core
 	:PROPERTIES:
 	:LOCATION: sys/core
 	:END:
 ** Design
-Our framework is primarily built upon the [[https://libp2p.io/][libp2p]] network stack, and
-thus provides an opinionated implementation of many of its core
-modules. You can see a full list of the types of modules, and their
-current status [[https://libp2p.io/implementations/][here]].
+	 
+The core primitives of our framework are inspired by the [[https://libp2p.io/][libp2p]]
+network stack, and thus provides an opinionated implementation of many
+of its core modules. You can see a full list of the types of modules,
+and their current statuses [[https://libp2p.io/implementations/][here]].
 
-The libp2p docs are quite in-depth, but quite verbose. Here are some
-of the core concepts which we'll refer to frequently:
-- *Peer* - An individual member of a libp2p network
-- *PeerID* - Identifies a unique Peer (by the multihash of its Public Key)
-- *Dial* - Opposite to *listen*, refers to an attempt to contact a peer
+The libp2p docs are quite in-depth, but here are some of the core
+concepts of particular interest:
+- *Peer* - An individual member of a libp2p network.
+- *PeerID* - Identifies a unique Peer (by the [[https://github.com/multiformats/multihash][multihash]] of its Public Key)
+- *Dial* - Opposed to *listen*, refers to an attempt to contact a peer
 - *Connection* - A reliable, bidirectional communication channel between two peers
-- *Transport* - The underlying interface used to build connections (TCP/UDP/Unix sockets)
-- *Multiaddress* - A modular addressing format that supports combining network layers (/ip4/127.0.0.1/udp/1234)
+- *Transport* - The underlying interface used to build connections (TCP/UDP/UNIX/???)
+- *Multiaddress* - A modular addressing format that supports combining network layers (/ip4/127.0.0.1/udp/1234)[fn:: see [[https://github.com/multiformats][multiformats]] for specifications]
 - *STUN* - enabled by [[https://lwn.net/Articles/542629/][SO_REUSEPORT]] socket option, also known as hole-punching
 - *TURN* - defined in [[https://tools.ietf.org/html/rfc5766][RFC 5766]], implemented as 'Circuit Relays' in libp2p
-- *Switch* - sometimes called the "swarm", provides a dialing and listening interface
+- *Switch* - sometimes called the "swarm" in libp2p source code, provides a combined dialing and listening interface
 
 #+begin_src dot :exports results :file /dfs/media/demon/architecture.png
 digraph {
@@ -101,10 +119,10 @@ digraph {
   tx3 -> SINK;
 }
 #+end_src
-
-
 #+RESULTS:
 [[https://demon.rwest.io/media/demon/architecture.png]]
 
 * roadmap
 #+INCLUDE: /srv/src/org/projects.org::*demon :only-contents t :minlevel 1
+
+* Footnotes
