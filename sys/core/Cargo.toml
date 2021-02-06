@@ -16,7 +16,7 @@ petgraph = "0.5.1"
 bytes = "1.0.0"
 thiserror = "1.0.23"
 tracing = "0.1.22"
-tokio = { version = "1.0.1", features=["rt", "sync"] }
+tokio = { version = "1.0.1", features=["rt", "sync", "net"] }
 tokio-util = "0.6.0"
 tokio-stream = "0.1"
 futures = { version = "0.3.8", features = ["thread-pool"] }
