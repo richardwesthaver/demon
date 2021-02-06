@@ -1,5 +1,4 @@
-pub mod ascii_ext;
-/// A collection of useful utilities
+//! A collection of useful utilities
 pub mod hostname;
 pub mod net;
 pub mod os;
