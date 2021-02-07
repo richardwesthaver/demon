@@ -1,0 +1,16 @@
+[package]
+name = "core_macros"
+version = "0.0.1"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+[lib]
+path = "lib.rs"
+proc-macro = true
+test = false
+doctest = false
+
+[dependencies]
+proc-macro2 = "1.0.24"
+syn = { version = "1.0.60", features = ["full"] }
+quote = "1.0.8"

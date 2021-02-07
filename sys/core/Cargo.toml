@@ -12,6 +12,7 @@ default = ["full"]
 full = []
 
 [dependencies]
+core_macros = { path = "macros" }
 petgraph = "0.5.1"
 bytes = "1.0.1"
 thiserror = "1.0.23"
