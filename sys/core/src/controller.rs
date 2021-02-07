@@ -3,23 +3,23 @@
 // Provides a remote-control API for Demons.
 // The API provides human-readable checks on the underlying Resources allocated by a Demon,
 // as well as an interface for `INIT' and 'KILL' commands.
-use tokio::sync::oneshot;
+use crate::Result;
 use bytes::Bytes;
 use std::collections::HashMap;
 use tokio::net::UdpSocket;
-use crate::Result;
+use tokio::sync::oneshot;
 
 #[derive(Debug)]
 pub enum Command {
-		Get {
-				key: String,
-				rx: Responder<Option<Bytes>>,
-		},
-		Set {
-				key: String,
-				val: Bytes,
-				rx: Responder<()>,
-		},
+  Get {
+    key: String,
+    rx: Responder<Option<Bytes>>,
+  },
+  Set {
+    key: String,
+    val: Bytes,
+    rx: Responder<()>,
+  },
 }
 
 type Responder<T> = oneshot::Sender<Result<T>>;
