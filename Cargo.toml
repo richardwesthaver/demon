@@ -20,7 +20,7 @@ members = [
 "utils/prometheus",
 "utils/build-utils",
 "utils/tools",
-
+"utils/tests",
 # "bin/stripe", # will need a build script for this to work
 ]
 

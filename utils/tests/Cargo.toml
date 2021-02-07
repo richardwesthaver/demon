@@ -1,0 +1,14 @@
+[package]
+name = "demon_tests"
+version = "0.1.0"
+authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
+edition = "2018"
+
+[lib]
+path = "mod.rs"
+
+[dev-dependencies]
+
+[[test]]
+name  = "benchmarks"
+path = "bench.rs"
