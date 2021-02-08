@@ -8,3 +8,5 @@ edition = "2018"
 
 [dependencies]
 salsa20 = { version = "0.7.2", features = ["xsalsa20"] }
+webe_id = "0.2.0"
+uuid = { version = "0.8.2", features = ["v1"] }
