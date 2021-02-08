@@ -5,17 +5,15 @@ authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-
 bb8 = "0.7.0"
 async-trait = "0.1"
-tokio = { version = "1.0", features = ["rt"] }
+tokio = { version = "1.2", features = ["rt"] }
 tokio-postgres = { version = "0.7" }
 postgres-types = { version = "0.2.0", features = ["derive"] }
-indradb-lib = { version = "1.3.0" }
-#indradb-proto = {version = "1.3.0" }
-
+indradb-lib = { version = "2" }
 sled = { version = "0.34.6", optional = true, features = ["compression", "no_metrics"] }
 
 [dev-dependencies]
 futures-util = "0.3.2"
-tokio = { version = "1.0.0", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "1.2", features = ["macros", "rt-multi-thread"] }
+#indradb-proto = {version = "2" }
