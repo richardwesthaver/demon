@@ -80,9 +80,9 @@ you to check out the dependency crates for starting a similar project.
 **** Voice Generator
 		 A 'voice' is simply a unique sound - two voices can be generating
 		 the same sound, but there is no such thing as a /shared/ voice.
-		 It is strictly speaking [[https://en.wikipedia.org/wiki/Monotonic_function][monotonic]]. So for simplicity's sake, we
-		 will use a single /[[https://en.wikipedia.org/wiki/Monophony][monophonic]]/ oscillator to represent all of our drum sounds
-		 (kick, snare, hat, bleeps and bloops).
+		 For simplicity's sake, we will use a single /[[https://en.wikipedia.org/wiki/Monophony][monophonic]]/
+		 oscillator to represent all of our drum sounds (kick, snare, hat,
+		 bleeps and bloops).
 
 **** Clock
 		 The clock patch is built on a single metro object that emits a
