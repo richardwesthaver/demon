@@ -49,31 +49,36 @@ you to check out the dependency crates for starting a similar project.
 ** TODO Testing RF Signals
 	 - [[https://wiki.gnuradio.org/index.php/InstallingGR#From_Binaries][install gnuradio]] on receiver machine
 	 - [[https://greatscottgadgets.com/hackrf/one/][HackRF One]] in transmit mode
-* TODO Abstract
-* Core
-	:PROPERTIES:
-	:LOCATION: sys/core/
-	:END:
-** Design
+* TODO Abstract [0/2]
+** TODO A Distributed Drum Machine
+** TODO Introduction
+** TODO Motivation
+* TODO Modules
+** Core
+	 :PROPERTIES:
+	 :LOCATION: sys/core/
+	 :CATEGORY: core
+	 :END:
+*** Design
 	 
-The core primitives of our framework are inspired by the [[https://libp2p.io/][libp2p]]
-network stack, and thus provides an opinionated implementation of many
-of its concepts. You can see a full list of modules
-and their current status [[https://libp2p.io/implementations/][here]].
+ The core primitives of our framework are inspired by the [[https://libp2p.io/][libp2p]]
+ network stack, and thus provides an opinionated implementation of many
+ of its concepts. You can see a full list of modules
+ and their current status [[https://libp2p.io/implementations/][here]].
 
-The libp2p docs are quite in-depth, but here are some of the core
-concepts of particular interest:
-- *Peer* - An individual member of a libp2p network.
-- *PeerID* - Identifies a unique Peer (by the [[https://github.com/multiformats/multihash][multihash]] of its Public Key)
-- *Dial* - Opposed to *listen*, refers to an attempt to contact a peer
-- *Connection* - A reliable, bidirectional communication channel between two peers
-- *Transport* - The underlying interface used to build connections (TCP/UDP/UNIX/???)
-- *Multiaddress* - A modular addressing format that supports combining network layers (/ip4/127.0.0.1/udp/1234)[fn:: see [[https://github.com/multiformats][multiformats]] for specifications]
-- *STUN* - enabled by [[https://lwn.net/Articles/542629/][SO_REUSEPORT]] socket option, also known as hole-punching
-- *TURN* - defined in [[https://tools.ietf.org/html/rfc5766][RFC 5766]], implemented as 'Circuit Relays' in libp2p
-- *Switch* - sometimes called the "swarm" in libp2p source code, provides a combined dialing and listening interface
+ The libp2p docs are quite in-depth, but here are some of the core
+ concepts of particular interest:
+ - *Peer* - An individual member of a libp2p network.
+ - *PeerID* - Identifies a unique Peer (by the [[https://github.com/multiformats/multihash][multihash]] of its Public Key)
+ - *Dial* - Opposed to *listen*, refers to an attempt to contact a peer
+ - *Connection* - A reliable, bidirectional communication channel between two peers
+ - *Transport* - The underlying interface used to build connections (TCP/UDP/UNIX/???)
+ - *Multiaddress* - A modular addressing format that supports combining network layers (/ip4/127.0.0.1/udp/1234)[fn:: see [[https://github.com/multiformats][multiformats]] for specifications]
+ - *STUN* - enabled by [[https://lwn.net/Articles/542629/][SO_REUSEPORT]] socket option, also known as hole-punching
+ - *TURN* - defined in [[https://tools.ietf.org/html/rfc5766][RFC 5766]], implemented as 'Circuit Relays' in libp2p
+ - *Switch* - sometimes called the "swarm" in libp2p source code, provides a combined dialing and listening interface
 
-#+begin_src dot :exports results :file /dfs/media/demon/architecture.png
+ #+begin_src dot :exports results :file /dfs/media/demon/architecture.png
 digraph {
   compound=true;
   node [ fontname="Liberation Mono" ];
@@ -118,57 +123,83 @@ digraph {
   tx2 -> SINK;
   tx3 -> SINK;
 }
-#+end_src
-#+RESULTS:
-[[https://demon.rwest.io/media/demon/architecture.png]]
-* Database
-	:PROPERTIES:
-	:CREATED:  [2021-02-09 Tue 00:57]
-	:LOCATION: sys/db/
-	:DESCRIPTION: Graph Database Middleware
-	:END:
-	There are already storage primitives provided by the [[*Core][core]],
-	specifically the Registrar. These types of storage are designed to
-	be /fast/ and /concurrent/ though, which comes with an important
-	cost - they are not scaleable.
-
-	To see why this is we need only look at the DemonId type. It is
-	defined as
-	#+begin_src rust
-  pub type DemonId = u16;
-	#+end_src
-
-	It's just an unsigned 16-bit integer. Byte-aligned, simple, but
-	small with only 65,536 possible values. This type is fitting for
-	identifying Peers within Demons, which use local namespaces, and
-	thus gives us the same amount of flexibility as one can expect from
-	types with an equivalent size[fn:1]. It should NOT be used for other
-	types of identification, such as unique row indexes in a Relational
-	Database. Such a database wouldn't be that useful, with a maximum
-	row count of 65,536.
-
-	Instead, we'll create a dedicated module to store types of data
-	where we don't want to worry about these limits.
-
-** TODO Design
+ #+end_src
+ #+RESULTS:
+ [[https://demon.rwest.io/media/demon/architecture.png]]
+** Config
 	 :PROPERTIES:
-	 :CREATED:  [2021-02-09 Tue 02:08]
+	 :LOCATION: sys/config/
+	 :CATEGORY: config
 	 :END:
-	 We've chosen a Graph-based architecture for our database, which
-	 fits nicely with the general theme of the project. As such, we'll
-	 use [[https://indradb.github.io/][IndraDB]] for the database middleware via [[https://crates.io/crates/indradb-lib][indradb-lib]].
+** Database
+	 :PROPERTIES:
+	 :CREATED:  [2021-02-09 Tue 00:57]
+	 :LOCATION: sys/db/
+	 :DESCRIPTION: Graph Database and storage backend wrappers
+	 :CATEGORY: database
+	 :END:
+	 There are already storage primitives provided by the [[*Core][core]],
+	 specifically the Registrar. These types of storage are designed to
+	 be /fast/ and /concurrent/ though, which comes with an important
+	 cost - they are not scaleable.
+
+	 To see why this is we need only look at the DemonId type. It is
+	 defined as
+	 #+begin_src rust
+  pub type DemonId = u16;
+	 #+end_src
+
+	 It's just an unsigned 16-bit integer. Byte-aligned, simple, but
+	 small with only 65,536 possible values. This type is fitting for
+	 identifying Peers within Demons, which use local namespaces, and
+	 thus gives us the same amount of flexibility as one can expect from
+	 types with an equivalent size[fn:1]. It should NOT be used for other
+	 types of identification, such as unique row indexes in a Relational
+	 Database. Such a database wouldn't be that useful, with a maximum
+	 row count of 65,536.
+
+	 Instead, we'll create a dedicated module to store types of data
+	 where we don't want to worry about these limits.
+
+*** TODO Design
+		:PROPERTIES:
+		:CREATED:  [2021-02-09 Tue 02:08]
+		:END:
+		We've chosen a Graph-based architecture for our database, which
+		fits nicely with the general theme of the project. As such, we'll
+		use [[https://indradb.github.io/][IndraDB]] for the database middleware via [[https://crates.io/crates/indradb-lib][indradb-lib]].
 	 
-** The Backends
+*** The Backends
 
-	 First of all, we have no interest in building a database backend
-	 from scratch (for now). It sounds like a messy business and we have
-	 enough messes to deal with in a project of this size. Instead, we
-	 can create a common interface for connecting any number of
-	 backends to our project.
+		First of all, we have no interest in building a database backend
+		from scratch (for now). It sounds like a messy business and we have
+		enough messes to deal with in a project of this size. Instead, we
+		can create a common interface for connecting any number of
+		backends to our project.
 
-*** Sled
-*** RocksDB
-*** Cached
+**** Sled
+**** RocksDB
+**** Cached
+** CLI
+	 :PROPERTIES:
+	 :CATEGORY: cli
+	 :LOCATION: sys/cli/
+	 :END:
+** Networking
+	 :PROPERTIES:
+	 :LOCATION: sys/net/
+	 :CATEGORY: net
+	 :END:
+** Cmd
+	 :PROPERTIES:
+	 :CATEGORY: cmd
+	 :LOCATION: sys/cmd/
+	 :END:
+** Brain
+	 :PROPERTIES:
+	 :CATEGORY: brain
+	 :LOCATION: sys/brain/
+	 :END:
 
 * Roadmap
 #+INCLUDE: /srv/src/org/projects.org::*demon :only-contents t :minlevel 1
@@ -177,4 +208,3 @@ digraph {
 
 Footnotes:
 [fn:1]  [[https://en.wikipedia.org/wiki/Port_(computer_networking)][IP Ports]], for example.
-
