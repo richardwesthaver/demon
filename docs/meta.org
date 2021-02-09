@@ -50,9 +50,88 @@ you to check out the dependency crates for starting a similar project.
 	 - [[https://wiki.gnuradio.org/index.php/InstallingGR#From_Binaries][install gnuradio]] on receiver machine
 	 - [[https://greatscottgadgets.com/hackrf/one/][HackRF One]] in transmit mode
 * TODO Abstract [0/2]
-** TODO A Distributed Drum Machine
-** TODO Introduction
 ** TODO Motivation
+** TODO A Distributed Drum Machine
+	 :PROPERTIES:
+	 :LOCATION: ddm.pd
+	 :END:
+	 I've decided to build a drum machine in PureData as a prototype and
+	 to serve as a reference model throughout this documentation.
+	 PureData is a fun visual programming language and although it is
+	 intended for media generation, it can be very useful for
+	 demonstrating computer-network interactions. Drum Machines can be
+	 boiled down to a few core components, which we can build
+	 individually and compose modularly - resulting in a functional,
+	 although less than practical, digital musical instrument. We will
+	 demonstrate a few different configurations of our drum machine, and
+	 show how we might distribute the functionality of our instrument
+	 across a network of computers.
+
+*** What is a Drum Machine?
+
+*** PureData, Max, and Creative Coding
+
+*** The Patches
+		The drum machine consists of a set of patches, each of which takes
+		an input and returns an output. Using the functionality provided
+		in Pd, we can easily combine these 'subpatches' with virtual patch
+		cables. First we'll explain each subpatch, and then we'll plug 'em
+		in.
+**** Voice Generator
+		 A 'voice' is simply a unique sound - two voices can be generating
+		 the same sound, but there is no such thing as a /shared/ voice.
+		 It is strictly speaking [[https://en.wikipedia.org/wiki/Monotonic_function][monotonic]]. So for simplicity's sake, we
+		 will use a single /[[https://en.wikipedia.org/wiki/Monophony][monophonic]]/ oscillator to represent all of our drum sounds
+		 (kick, snare, hat, bleeps and bloops).
+
+**** Clock
+		 The clock patch is built on a single metro object that emits a
+		 bang at a set rate. It is used to control the sequencer, but can
+		 also be patched to other types of objects :).
+
+**** Sequencer
+		 We've built a simple 16-step sequencer, with a few adjustable
+		 properties that are assigned to each step.
+
+**** Mixer
+		 The mixer takes a signal as input, modifies it in some way, and
+		 spits it back to the output. Ultimately one (or two, for stereo)
+		 of these objects will always sit in front of the dac~ object,
+		 which dispatches audio signals to the soundcard and speakers.
+
+		 The most powerful feature of this patch is the 'gain' setting,
+		 which controls the overall amplitude or strength of the input.
+		 This is made even more evident by the behavior of sound
+		 generators in Max-like languages, which have a tendency to output
+		 at a single amplitude - the maximum. If you patch a white noise
+		 generator directly into the dac~ object, you're in for quite the
+		 treat. To account for this, our mixer is designed to be patched
+		 anywhere in the drum machine, so we can not only adjust levels at
+		 the end of the patch, like a regular mixer, but we can also
+		 adjust levels of voice generators individually[fn:1].
+
+		 We also have a chain of effects that can be adjusted, similar to
+		 the way you would adjust the channel strip knobs on an analog
+		 mixing board. These include a multipass filter, saturation, and
+		 delay.
+
+**** Controller
+		 If you've come this far you're probably wondering how we use the
+		 damn thing.. Until now all we've had to work with are trigger and
+		 bang objects. Not much of an instrument. Well rest assured,
+		 there's a patch for that.
+
+*** Patching
+
+**** Single Voice
+		
+**** Dumb Machine
+
+**** Distrubiting
+
+*** Problems
+		
+** TODO Introduction
 * TODO Modules
 ** Core
 	 :PROPERTIES:
@@ -153,7 +232,7 @@ digraph {
 	 small with only 65,536 possible values. This type is fitting for
 	 identifying Peers within Demons, which use local namespaces, and
 	 thus gives us the same amount of flexibility as one can expect from
-	 types with an equivalent size[fn:1]. It should NOT be used for other
+	 types with an equivalent size[fn:2]. It should NOT be used for other
 	 types of identification, such as unique row indexes in a Relational
 	 Database. Such a database wouldn't be that useful, with a maximum
 	 row count of 65,536.
@@ -205,6 +284,7 @@ digraph {
 #+INCLUDE: /srv/src/org/projects.org::*demon :only-contents t :minlevel 1
 
 * Footnotes
+[fn:1] This pre-gain and post-gain setup is known as [[https://www.izotope.com/en/learn/gain-staging-what-it-is-and-how-to-do-it.html][gain staging]].
+[fn:2]  [[https://en.wikipedia.org/wiki/Port_(computer_networking)][IP Ports]], for example.	
 
-Footnotes:
-[fn:1]  [[https://en.wikipedia.org/wiki/Port_(computer_networking)][IP Ports]], for example.
+
