@@ -16,7 +16,7 @@ jobs:
         toolchain: [nightly]
         os: [ubuntu-latest, macos-latest]
         runs-on: ${{ matrix.os }}
-      steps:
+    steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
