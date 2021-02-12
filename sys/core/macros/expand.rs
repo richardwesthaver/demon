@@ -1,5 +1,4 @@
 use proc_macro2::TokenStream;
-
 use quote::quote;
 use syn::punctuated::Punctuated;
 use syn::{parse_quote, Error, ItemFn, Result};
@@ -15,7 +14,7 @@ pub fn expand(mode: Mode, mut function: ItemFn) -> Result<TokenStream> {
   if function.sig.inputs.len() > 1 {
     return Err(Error::new_spanned(
       function.sig,
-      "expected one argument of type dmeon_core::DemonInit",
+      "expected one argument of type demon_core::DemonInit",
     ));
   }
 
@@ -43,7 +42,7 @@ pub fn expand(mode: Mode, mut function: ItemFn) -> Result<TokenStream> {
   let body = match (function.sig.asyncness.is_some(), mode) {
     (true, Mode::Test) => quote! {
         tokio::runtime::Builder::new()
-            .basic_scheduler()
+            .new_current_thread()
             .enable_all()
             .build()
             .unwrap()
@@ -51,7 +50,7 @@ pub fn expand(mode: Mode, mut function: ItemFn) -> Result<TokenStream> {
     },
     (true, Mode::Main) => quote! {
         tokio::runtime::Builder::new()
-            .threaded_scheduler()
+            .new_multi_thread()
             .enable_all()
             .build()
             .unwrap()
