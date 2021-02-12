@@ -155,14 +155,18 @@ pub fn get_input(
       Some(interface) => vec![interface],
       None => {
         failure::bail!("Cannot find interface {}", name);
-        // the homebrew formula relies on this wording, please be
-        // careful when changing
+        // the homebrew formula relies on this wording, please be careful when changing
       }
     }
   } else {
     datalink::interfaces()
   };
 
+  #[cfg(any(target_os = "windows"))]
+  let network_frames = network_interfaces
+    .iter()
+    .filter(|iface| !iface.ips.is_empty())
+    .map(|iface| (iface, get_datalink_channel(iface)));
   #[cfg(not(target_os = "windows"))]
   let network_frames = network_interfaces
     .iter()
@@ -198,8 +202,9 @@ pub fn get_input(
   let keyboard_events = Box::new(TerminalEvents);
   let write_to_stdout = create_write_to_stdout();
   let dns_client = if resolve {
-    let runtime = Runtime::new().unwrap();
-    let resolver = match runtime.block_on(dns::Resolver::new(dns_server)) {
+    let mut runtime = Runtime::new()?;
+    let resolver = match runtime.block_on(dns::Resolver::new(runtime.handle().clone(), dns_server))
+    {
       Ok(resolver) => resolver,
       Err(err) => failure::bail!(
         "Could not initialize the DNS resolver. Are you offline?\n\nReason: {:?}",
@@ -232,4 +237,16 @@ fn eperm_message() -> &'static str {
     * Build a `setcap(8)` wrapper for `bandwhich` with the following rules:
         `cap_sys_ptrace,cap_dac_read_search,cap_net_raw,cap_net_admin+ep`
     "#
+}
+
+#[inline]
+#[cfg(any(target_os = "windows"))]
+fn eperm_message() -> &'static str {
+  "Insufficient permissions to listen on network interface(s). Try running with administrator rights."
+}
+
+#[inline]
+#[cfg(any(target_os = "macos", target_os = "freebsd"))]
+fn eperm_message() -> &'static str {
+  "Insufficient permissions to listen on network interface(s). Try running with sudo."
 }
