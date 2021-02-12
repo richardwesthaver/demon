@@ -14,24 +14,27 @@ jobs:
     strategy:
       matrix:
         toolchain: [nightly]
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
+        os: [ubuntu-latest, macos-latest]
+        runs-on: ${{ matrix.os }}
+      steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}
           components: rustfmt, clippy
           override: true
-      - name: Install alsa and udev
+      - name: Install alsa and udev (Linux)
         run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
-        if: runner.os == 'linux'					
+        if: runner.os == 'ubuntu-latest'
+      - name: Install ncurses (Darwin)
+        run: brew install ncurses
+        if: runner.os == 'macos-latest'
       - name: Check formatting
         run: cargo fmt --all -- --check
-        if: runner.os == 'linux' && matrix.toolchain == 'nightly'
+        if: runner.os == 'ubuntu-latest' && matrix.toolchain == 'nightly'
       - name: Clippy
         run: cargo clippy --all-targets --all-features -- -A clippy::type_complexity -A clippy::manual-strip
-        if: runner.os == 'linux' && matrix.toolchain == 'nightly'
+        if: runner.os == 'ubuntu-latest' && matrix.toolchain == 'nightly'
       - name: Build and run tests
         run: cargo test --workspace
         env:
