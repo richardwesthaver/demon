@@ -8,6 +8,7 @@
 #+keywords: emacs
 #+html_link_home: https://github.com/richardwesthaver/demon
 #+html_link_up: https://rwest.io/projects
+#+HTML_HEAD: <link rel="stylesheet" href="https://demon.rwest.io/media/css/page.css"/>
 
 #+name: commit_hash
 #+BEGIN_SRC emacs-lisp :exports none :tangle no
@@ -49,7 +50,7 @@ you to check out the dependency crates for starting a similar project.
 ** TODO Testing RF Signals
 	 - [[https://wiki.gnuradio.org/index.php/InstallingGR#From_Binaries][install gnuradio]] on receiver machine
 	 - [[https://greatscottgadgets.com/hackrf/one/][HackRF One]] in transmit mode
-* TODO Abstract [0/2]
+* TODO Abstract
 ** TODO Motivation
 ** TODO A Distributed Drum Machine
 	 :PROPERTIES:
@@ -69,8 +70,58 @@ you to check out the dependency crates for starting a similar project.
 
 *** What is a Drum Machine?
 
-*** PureData, Max, and Creative Coding
+		#+CAPTION: from Sweetwater
+		#+begin_quote
+		Drum machines have matured immensely in the last 100 years. Back
+		in the early 1930's, D-Rail invented the Rhythmicon - a large,
+		gangly forerunner of today's drum machines. Fast forward to 1980,
+		when the Linn LM-1 burst onto the scene as the first drum machine
+		to use digitally sampled sounds - attracting acts like Prince and
+		Devo. The Linn LM-1 would ultimately be overshadowed by Roland's
+		TR-808, also released in 1980. The analog TR-808 (and later
+		TR-909) have continued to shape electronic, hip-hop, house, R&B,
+		and other genres - see Marvin Gaye's "Sexual Healing" and Kanye
+		West's 808's and Heartbreak. While drum machines were originally
+		conceived to fill in when live drums and drummers weren't
+		available, they've revealed avenues of creativity all their own.
+		#+end_quote
 
+		#+CAPTION: The Linn LM-1 (1980)
+		[[https://demon.rwest.io/media/demon/Linn_LM1.jpg]]
+
+		#+CAPTION: The Roland TR-909 (1983)
+		[[https://demon.rwest.io/media/demon/TR-909.jpg]]
+
+		#+CAPTION: Ableton Drum Rack (2001)
+		[[https://demon.rwest.io/media/demon/drumrack.jpg]]
+
+		A [[https://en.wikipedia.org/wiki/Drum_machine][Drum Machine]] is an electronic musical instrument that creates
+		percussion sounds, drum beats, and patterns. The first commercial
+		drum machines started hitting the scene in the early 1980's and
+		became the foundation for many types of electronic music. Unlike
+		other instruments of the time, it relied less on a musician
+		'playing' the instrument as it did being 'programmed' via a
+		built-in step sequencer.
+
+		Although out of scope of this document, it's worth noting that
+		Drum Machines are an instrument unto themselves, and not to be
+		thought of as some cheap knockoff, or a replacement for an actual
+		drummer.
+		
+**** Synthesis vs Sampling
+**** Programming
+		 - step-sequencing
+		 - drum kits
+		 - song-sequencing
+
+*** PureData, Max, and Creative Coding
+		[[https://puredata.info/][PureData]] is the real-time graphical environment we will use to
+		prototype our drum machine. It belongs to a family of programming
+		languages called 'Patchers' which includes Max/MSP (now licensed
+		by a music software company, Ableton AG). PureData is free and
+		open-source, which makes it perfect for educational purposes, and
+		shares the same /basic/ functionality as Max/MSP.
+		
 *** The Patches
 		The drum machine consists of a set of patches, each of which takes
 		an input and returns an output. Using the functionality provided
@@ -120,7 +171,7 @@ you to check out the dependency crates for starting a similar project.
 		 damn thing.. Until now all we've had to work with are trigger and
 		 bang objects. Not much of an instrument. Well rest assured,
 		 there's a patch for that.
-
+		 
 *** Patching
 
 **** Single Voice
@@ -128,9 +179,14 @@ you to check out the dependency crates for starting a similar project.
 **** Dumb Machine
 
 **** Distrubiting
+		 - udpsend, udpreceive
+		 - OSC
 
 *** Problems
-		
+**** Distributing Audio Data
+**** Time
+**** Fault Detection
+		 
 ** TODO Introduction
 * TODO Modules
 ** Core
