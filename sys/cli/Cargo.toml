@@ -10,7 +10,7 @@ cursive = { version = "0.16", default_features = false, features = [ "crossterm-
 clipboard = "0.5"
 cursive_tree_view = "0.7"
 cursive_calendar_view = "0.7"
-fui = "1.0"
+fui = "2.0"
 thiserror = "1.0.21"
 clap = { version = "2.33.3" }
 serde = { version = "1.0", features = ["derive"] }
