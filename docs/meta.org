@@ -50,12 +50,9 @@ you to check out the dependency crates for starting a similar project.
 ** TODO Testing RF Signals
 	 - [[https://wiki.gnuradio.org/index.php/InstallingGR#From_Binaries][install gnuradio]] on receiver machine
 	 - [[https://greatscottgadgets.com/hackrf/one/][HackRF One]] in transmit mode
-* TODO Abstract
+* Abstract
 ** TODO Motivation
 ** TODO A Distributed Drum Machine
-	 :PROPERTIES:
-	 :LOCATION: ddm.pd
-	 :END:
 	 I've decided to build a drum machine in PureData as a prototype and
 	 to serve as a reference model throughout this documentation.
 	 PureData is a fun visual programming language and although it is
@@ -70,7 +67,35 @@ you to check out the dependency crates for starting a similar project.
 
 *** What is a Drum Machine?
 
-		#+CAPTION: from Sweetwater
+		A [[https://en.wikipedia.org/wiki/Drum_machine][Drum Machine]] is an electronic musical instrument that creates
+		percussion sounds, drum beats, and patterns. The first commercial
+		drum machines started hitting the scene in the early 1980's and
+		became the foundation for many types of electronic music. Unlike
+		other instruments of the time, these instruments relied less on a
+		musician 'playing' them as they did being 'programmed' via a
+		built-in step sequencer. Over time, popular drum machines like the
+		Roland TR-808 and MCP2000 have become staples in many genres of
+		music due to the sonic and rhythmic possibilities that they
+		are capable of.
+
+		It's worth noting that Drum Machines are an instrument unto
+		themselves, and not to be thought of as some cheap knockoff, or a
+		replacement for an actual drummer. They were originally developed
+		for this purpose, and are still used as such, but this is /not/
+		why they became popular and have a dedicated cult following today.
+		In many senses, the 'synthetic drummer' is a totally different
+		type of machine, with a different purpose -- imitation.
+
+**** A Brief History
+		#+CAPTION: The Roland TR-808 (1980)
+		[[https://demon.rwest.io/media/demon/TR-808.jpg]]
+
+		#+CAPTION: The Akai MPC2000 (1997)
+		[[https://demon.rwest.io/media/demon/MPC2000.jpg]]
+
+		#+CAPTION: Ableton Drum Rack (2001)
+		[[https://demon.rwest.io/media/demon/drumrack.jpg]]
+		
 		#+begin_quote
 		Drum machines have matured immensely in the last 100 years. Back
 		in the early 1930's, D-Rail invented the Rhythmicon - a large,
@@ -83,31 +108,9 @@ you to check out the dependency crates for starting a similar project.
 		and other genres - see Marvin Gaye's "Sexual Healing" and Kanye
 		West's 808's and Heartbreak. While drum machines were originally
 		conceived to fill in when live drums and drummers weren't
-		available, they've revealed avenues of creativity all their own.
+		available, they've revealed avenues of creativity all their own.[fn:1]
 		#+end_quote
 
-		#+CAPTION: The Linn LM-1 (1980)
-		[[https://demon.rwest.io/media/demon/Linn_LM1.jpg]]
-
-		#+CAPTION: The Roland TR-909 (1983)
-		[[https://demon.rwest.io/media/demon/TR-909.jpg]]
-
-		#+CAPTION: Ableton Drum Rack (2001)
-		[[https://demon.rwest.io/media/demon/drumrack.jpg]]
-
-		A [[https://en.wikipedia.org/wiki/Drum_machine][Drum Machine]] is an electronic musical instrument that creates
-		percussion sounds, drum beats, and patterns. The first commercial
-		drum machines started hitting the scene in the early 1980's and
-		became the foundation for many types of electronic music. Unlike
-		other instruments of the time, it relied less on a musician
-		'playing' the instrument as it did being 'programmed' via a
-		built-in step sequencer.
-
-		Although out of scope of this document, it's worth noting that
-		Drum Machines are an instrument unto themselves, and not to be
-		thought of as some cheap knockoff, or a replacement for an actual
-		drummer.
-		
 **** Synthesis vs Sampling
 **** Programming
 		 - step-sequencing
@@ -159,7 +162,7 @@ you to check out the dependency crates for starting a similar project.
 		 treat. To account for this, our mixer is designed to be patched
 		 anywhere in the drum machine, so we can not only adjust levels at
 		 the end of the patch, like a regular mixer, but we can also
-		 adjust levels of voice generators individually[fn:1].
+		 adjust levels of voice generators individually[fn:2].
 
 		 We also have a chain of effects that can be adjusted, similar to
 		 the way you would adjust the channel strip knobs on an analog
@@ -208,7 +211,7 @@ you to check out the dependency crates for starting a similar project.
  - *Dial* - Opposed to *listen*, refers to an attempt to contact a peer
  - *Connection* - A reliable, bidirectional communication channel between two peers
  - *Transport* - The underlying interface used to build connections (TCP/UDP/UNIX/???)
- - *Multiaddress* - A modular addressing format that supports combining network layers (/ip4/127.0.0.1/udp/1234)[fn:: see [[https://github.com/multiformats][multiformats]] for specifications]
+ - *Multiaddress* - A modular addressing format that supports combining network layers (/ip4/127.0.0.1/udp/1234)[fn:3]
  - *STUN* - enabled by [[https://lwn.net/Articles/542629/][SO_REUSEPORT]] socket option, also known as hole-punching
  - *TURN* - defined in [[https://tools.ietf.org/html/rfc5766][RFC 5766]], implemented as 'Circuit Relays' in libp2p
  - *Switch* - sometimes called the "swarm" in libp2p source code, provides a combined dialing and listening interface
@@ -288,7 +291,7 @@ digraph {
 	 small with only 65,536 possible values. This type is fitting for
 	 identifying Peers within Demons, which use local namespaces, and
 	 thus gives us the same amount of flexibility as one can expect from
-	 types with an equivalent size[fn:2]. It should NOT be used for other
+	 types with an equivalent size[fn:4]. It should NOT be used for other
 	 types of identification, such as unique row indexes in a Relational
 	 Database. Such a database wouldn't be that useful, with a maximum
 	 row count of 65,536.
@@ -340,7 +343,8 @@ digraph {
 #+INCLUDE: /srv/src/org/projects.org::*demon :only-contents t :minlevel 1
 
 * Footnotes
-[fn:1] This pre-gain and post-gain setup is known as [[https://www.izotope.com/en/learn/gain-staging-what-it-is-and-how-to-do-it.html][gain staging]].
-[fn:2]  [[https://en.wikipedia.org/wiki/Port_(computer_networking)][IP Ports]], for example.	
-
+[fn:1] [[https://www.sweetwater.com/c643--Drum_Machines_and_Samplers][Drum Machines & Samplers | Sweetwater]] 
+[fn:2] This pre-gain and post-gain setup is known as [[https://www.izotope.com/en/learn/gain-staging-what-it-is-and-how-to-do-it.html][gain staging]].
+[fn:3] see [[https://github.com/multiformats][multiformats]] for specifications
+[fn:4]  [[https://en.wikipedia.org/wiki/Port_(computer_networking)][IP Ports]], for example.	
 
