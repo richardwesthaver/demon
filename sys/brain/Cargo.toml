@@ -5,7 +5,7 @@ authors = ["richardwesthaver <richard.westhaver@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-nalgebra = "0.24.1"
+nalgebra = "0.25.0"
 deepspeech = "0.9.0"
 
 [dev-dependencies]
